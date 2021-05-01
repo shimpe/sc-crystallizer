@@ -1,0 +1,1 @@
+python /home/shimpe/development/c++/supercollider/SuperCollider/tools/cmake_gen/generate_server_plugin_cmake.py -P "Crystallizer" -p "plugins/Crystallizer" -a "Stefaan Himpe"
