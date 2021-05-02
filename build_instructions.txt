@@ -1,0 +1,3 @@
+cmake -B "build" -S . -DSC_PATH=/home/shimpe/development/c++/supercollider/SuperCollider -DCMAKE_INSTALL_PREFIX=/home/shimpe/.local/share/SuperCollider/Extensions
+
+cmake --build build --config "Release" --target install
