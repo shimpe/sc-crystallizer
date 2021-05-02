@@ -17,9 +17,12 @@ public:
 private:
     // Calc function
     void next(int nSamples);
+    void next_control_mult(int nSamples);
+    void next_scalar_mult(int nSamples);
 
     // Member variables
     float m_Previous;
+    float m_ScalarMult;
 };
 
 } // namespace Crystallizer
