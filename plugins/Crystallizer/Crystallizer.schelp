@@ -1,26 +1,57 @@
 class:: Crystallizer
 summary:: A simple audio effect
-related:: TODO
-categories:: UGens>TODO
+related::Filter
+categories::UGen>Filter
 
 description::
 
-A simple audio effect
+A port of the ffmpeg audio crystallizer effect
 
 
 classmethods::
 
-method::ar, kr
+method::ar
 
-argument::TODO
+argument:: input
+Audio rate input signal
 
-argument::TODO
+argument:: mult
+Strength of the effect (0 = no effect). mult can be a scalar, a control rate (.kr) or an audio rate (.ar) signal. It can be positive or negative.
 
 
 examples::
 
 code::
 
-{ Crystallizer.ar(/* TODO */) }.play
+(
+s.waitForBoot({
+	b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");
+	s.sync;
+
+	SynthDef(\help_PlayBuf, {
+		| out = 0, bufnum = 0 |
+		Out.ar(out,
+			PlayBuf.ar(1, bufnum, BufRateScale.kr(bufnum), doneAction: Done.freeSelf)
+		);
+	}).add;
+
+	SynthDef(\help_PlayBufCryst, {
+		| out = 0, bufnum = 0 |
+		Out.ar(out,
+			Crystallizer.ar(PlayBuf.ar(1, bufnum, BufRateScale.kr(bufnum), doneAction: Done.freeSelf), 20);
+		);
+	}).add;
+
+	s.sync;
+
+	fork {
+		Synth(\help_PlayBuf, [\out, 0, \bufnum, b]);
+		5.wait;
+		Synth(\help_PlayBufCryst, [\out, 0, \bufnum, b]);
+	}
+});
+)
+
+
 
 ::
